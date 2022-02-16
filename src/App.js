@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import TodoList from "./components/TodoList";
+import TodoDetail from "./components/TodoDetail";
+import { getTodoListState } from "./recoil";
 
-function App() {
+const App = () => {
+  const todoList = useRecoilValue(getTodoListState);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Routes>
+        <Route path="/" element={<TodoList />} />
+        {todoList.map((todo) => {
+          return (
+            <Route
+              path={todo.id.toString()}
+              element={<TodoDetail />}
+              key={todo.id}
+            />
+          );
+        })}
+      </Routes>
     </div>
   );
-}
+};
 
 export default App;
