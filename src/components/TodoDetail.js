@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { todoListState, getItemAtom } from "../recoil";
+import { todoListState, getIdItemAtom } from "../recoil";
 import moment from "moment";
 
 function replaceItemAtIndex(arr, index, newValue) {
@@ -8,16 +8,16 @@ function replaceItemAtIndex(arr, index, newValue) {
 }
 export default function TodoDetail() {
   const [todoList, setTodoList] = useRecoilState(todoListState);
-  const getItem = useRecoilValue(getItemAtom);
-  const [inputEdit, setInputEdit] = useState(todoList[getItem].text);
+  const getIdItem = useRecoilValue(getIdItemAtom);
+  const [inputEdit, setInputEdit] = useState(todoList[getIdItem].text);
   const [isEdit, setIsEdit] = useState(false);
   // const index = todoList.findIndex((listItem) => listItem === getItem);
-  console.log(getItem);
+  console.log(getIdItem);
 
   const update = ({ target: { value } }) => {
     setIsEdit(!isEdit);
-    const newList = replaceItemAtIndex(todoList, getItem, {
-      ...todoList[getItem],
+    const newList = replaceItemAtIndex(todoList, getIdItem, {
+      ...todoList[getIdItem],
       text: inputEdit,
       time: moment().format("hh:mm:ss - DD/MM/YYYY"),
     });
@@ -25,7 +25,7 @@ export default function TodoDetail() {
   };
 
   const deleteItem = () => {
-    const newList = todoList.filter((list) => list.id !== getItem);
+    const newList = todoList.filter((list) => list.id !== getIdItem);
     setTodoList(newList);
   };
   return (
@@ -37,7 +37,7 @@ export default function TodoDetail() {
         marginTop: "20px",
       }}
     >
-      <div style={{ width: "30px" }}>{getItem}</div>
+      <div style={{ width: "30px" }}>{getIdItem}</div>
       {isEdit ? (
         <input
           type="text"
@@ -48,9 +48,9 @@ export default function TodoDetail() {
           style={{ width: "200px" }}
         />
       ) : (
-        <div style={{ width: "200px" }}>{todoList[getItem].text}</div>
+        <div style={{ width: "200px" }}>{todoList[getIdItem].text}</div>
       )}
-      <div style={{ marginRight: "20px" }}>{todoList[getItem].time}</div>
+      <div style={{ marginRight: "20px" }}>{todoList[getIdItem].time}</div>
       <button onClick={deleteItem}>X</button>
       <button onClick={update}>{isEdit ? "Update" : "Edit"}</button>
     </div>

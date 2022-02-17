@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { todoListState, getItemAtom } from "../recoil";
+import { todoListState, getIdItemAtom } from "../recoil";
 import moment from "moment";
 import { Link } from "react-router-dom";
 
@@ -10,7 +10,7 @@ function replaceItemAtIndex(arr, index, newValue) {
 
 const TodoItem = ({ item }) => {
   const [todoList, setTodoList] = useRecoilState(todoListState);
-  const setItem = useSetRecoilState(getItemAtom);
+  const setIdItem = useSetRecoilState(getIdItemAtom);
   const [inputEdit, setInputEdit] = useState(item.text);
   const [isEdit, setIsEdit] = useState(false);
   const index = todoList.findIndex((listItem) => listItem === item);
@@ -32,7 +32,7 @@ const TodoItem = ({ item }) => {
   };
 
   const handleGetItem = () => {
-    setItem(item.id);
+    setIdItem(item.id);
   };
   return (
     <div

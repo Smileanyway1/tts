@@ -4,8 +4,8 @@ const todoListState = atom({
   key: "todoListState",
   default: JSON.parse(localStorage.getItem("localStorageRecoil")) ?? [],
 });
-const getItemAtom = atom({
-  key: "getItemAtom",
+const getIdItemAtom = atom({
+  key: "getIdItemAtom",
   default: null,
 });
 const getTodoListState = selector({
@@ -17,4 +17,4 @@ const getTodoListState = selector({
   },
 });
 
-export { todoListState, getItemAtom, getTodoListState };
+export { todoListState, getIdItemAtom, getTodoListState };
