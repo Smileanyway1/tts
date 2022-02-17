@@ -32,7 +32,7 @@ const TodoItem = ({ item }) => {
   };
 
   const handleGetItem = () => {
-    setItem(item);
+    setItem(item.id);
   };
   return (
     <div
