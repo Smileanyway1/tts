@@ -6,7 +6,7 @@ const todoListState = atom({
 });
 const getItemAtom = atom({
   key: "getItemAtom",
-  default: {},
+  default: null,
 });
 const getTodoListState = selector({
   key: "filteredTodoListState",
