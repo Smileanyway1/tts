@@ -1,15 +1,28 @@
 import React, { useState } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { todoListState, getItemAtom } from "../recoil";
+import moment from "moment";
+
+function replaceItemAtIndex(arr, index, newValue) {
+  return [...arr.slice(0, index), newValue, ...arr.slice(index + 1)];
+}
 export default function TodoDetail() {
   const [todoList, setTodoList] = useRecoilState(todoListState);
-  const getItem = useRecoilState(getItemAtom)[0];
+  const getItem = useRecoilValue(getItemAtom);
   const [inputEdit, setInputEdit] = useState(getItem.text);
   const [isEdit, setIsEdit] = useState(false);
-  const update = () => {
+  const index = todoList.findIndex((listItem) => listItem === getItem);
+  console.log(index);
+
+  const update = ({ target: { value } }) => {
     setIsEdit(!isEdit);
-    // todoList[index] = {id:1, text: inputEdit};
-    setTodoList(todoList);
+    const newList = replaceItemAtIndex(todoList, index, {
+      ...getItem,
+      text: inputEdit,
+      time: moment().format("hh:mm:ss - DD/MM/YYYY"),
+    });
+    console.log(newList);
+    setTodoList(newList);
   };
 
   const deleteItem = () => {
