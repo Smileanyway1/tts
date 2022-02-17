@@ -22,7 +22,6 @@ const TodoItem = ({ item }) => {
       text: inputEdit,
       time: moment().format("hh:mm:ss - DD/MM/YYYY"),
     });
-
     setTodoList(newList);
   };
 
@@ -34,6 +33,7 @@ const TodoItem = ({ item }) => {
   const handleGetItem = () => {
     setIdItem(item.id);
   };
+
   return (
     <div
       style={{

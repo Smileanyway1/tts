@@ -9,15 +9,16 @@ function replaceItemAtIndex(arr, index, newValue) {
 export default function TodoDetail() {
   const [todoList, setTodoList] = useRecoilState(todoListState);
   const getIdItem = useRecoilValue(getIdItemAtom);
-  const [inputEdit, setInputEdit] = useState(todoList[getIdItem].text);
   const [isEdit, setIsEdit] = useState(false);
-  // const index = todoList.findIndex((listItem) => listItem === getItem);
+  const index = todoList.findIndex((listItem) => listItem.id === getIdItem);
+  const [inputEdit, setInputEdit] = useState(todoList[index].text);
+
   console.log(getIdItem);
 
   const update = ({ target: { value } }) => {
     setIsEdit(!isEdit);
-    const newList = replaceItemAtIndex(todoList, getIdItem, {
-      ...todoList[getIdItem],
+    const newList = replaceItemAtIndex(todoList, index, {
+      ...todoList[index],
       text: inputEdit,
       time: moment().format("hh:mm:ss - DD/MM/YYYY"),
     });
@@ -48,9 +49,9 @@ export default function TodoDetail() {
           style={{ width: "200px" }}
         />
       ) : (
-        <div style={{ width: "200px" }}>{todoList[getIdItem].text}</div>
+        <div style={{ width: "200px" }}>{todoList[index].text}</div>
       )}
-      <div style={{ marginRight: "20px" }}>{todoList[getIdItem].time}</div>
+      <div style={{ marginRight: "20px" }}>{todoList[index].time}</div>
       <button onClick={deleteItem}>X</button>
       <button onClick={update}>{isEdit ? "Update" : "Edit"}</button>
     </div>
